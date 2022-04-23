@@ -1,0 +1,34 @@
+
+.sparepart_design{
+	width: 75px;
+    border: 1px solid #cecbcb;
+    padding: 10px 20px;
+    padding-left: 38px;
+    margin: 6px;
+    background: url(/point_of_sale/static/src/css/../img/search.png) no-repeat 15px;
+    background-color: white;
+    border-radius: 20px;
+    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    font-size: 13px
+}
+
+.sparepart_year{
+	width: 30px;
+    border: 1px solid #cecbcb;
+    padding: 10px 20px;
+    padding-left: 38px;
+    margin: 6px;
+    background: url(/point_of_sale/static/src/css/../img/search.png) no-repeat 15px;
+    background-color: white;
+    border-radius: 20px;
+    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    font-size: 13px
+}
+
+.pos .pos-branding {
+    min-width: 280px;
+    max-width: 280px;
+}
+.search-bar-portal .search-box {
+    margin: 0 5px
+}

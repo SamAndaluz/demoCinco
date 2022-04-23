@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="TicketButton" t-inherit="point_of_sale.TicketButton" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('ticket-button')]" position="replace">
+            <div class="ticket-button" t-att-class="{ highlight: props.isTicketScreenShown }" t-on-click="onClick">
+                <div class="with-badge" t-att-badge="count">
+                    <i class="fa fa-ticket" aria-hidden="true"></i>
+                </div>
+                <!-- <div t-if="!env.isMobile">Orders</div> -->
+            </div>
+        </xpath>
+    </t>
+
+    <t t-name="ProductsWidgetControlPanel" t-inherit="point_of_sale.ProductsWidgetControlPanel" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('products-widget-control')]" position="inside">
+            <!-- <t t-if="env.pos.config.allow_client_fix_search"> -->
+            <Portal target="'.pos .search-bar-portal'">
+                <div class="search-box">
+                    <span t-on-click="clearSearch4" class="clear-icon" style="margin-right: 3px;">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </span>
+                    <input data-wid="1" type="text" placeholder="Variant" t-on-keyup="updatePartnerSearch" style="width: 80px;min-width: 80px;padding-left: 5px;padding-right: 15px;" class="em_variant"/>
+                </div>
+            </Portal>
+            <Portal target="'.pos .search-bar-portal'">
+                <div class="search-box">
+                    <span t-on-click="clearSearch3" class="clear-icon" style="margin-right: 3px;">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </span>
+                    <input  data-wid="2" type="text" placeholder="Model" t-on-keyup="updatePartnerSearch" style="width: 80px;min-width: 80px;padding-left: 5px;padding-right: 15px;" class="em_model"/>
+                </div>
+            </Portal>
+            <Portal target="'.pos .search-bar-portal'">
+                <div class="search-box">
+                    <span t-on-click="clearSearch2" class="clear-icon" style="margin-right: 3px;">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </span>
+                    <input data-wid="3" type="text" placeholder="Year" t-on-keyup="updatePartnerSearch" style="width: 80px;min-width: 80px;padding-left: 5px;padding-right: 15px;" class="em_manufacturer_year"/>
+                </div>
+            </Portal>
+            <Portal target="'.pos .search-bar-portal'">
+                <div class="search-box">
+                    <span t-on-click="clearSearch1" class="clear-icon" style="margin-right: 3px;">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </span>
+                    <input data-wid="4" type="text" placeholder="Manufacturer" t-on-keyup="updatePartnerSearch" style="width: 80px;min-width: 80px;padding-left: 5px;padding-right: 15px;" class="em_manufacturer"/>
+                </div>
+            </Portal>
+            <!-- </t> -->
+        </xpath>
+    </t> 
+</templates>

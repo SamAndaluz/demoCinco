@@ -1,0 +1,309 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record id="view_tree_auto_brand" model="ir.ui.view">
+            <field name="name">Auto Mfg Brand</field>
+            <field name="model">auto.mfg.brand</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="type_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tree_auto_year" model="ir.ui.view">
+            <field name="name">Automobile Built Year</field>
+            <field name="model">auto.built.year</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="year" required="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tree_auto_type" model="ir.ui.view">
+            <field name="name">Automobile Type</field>
+            <field name="model">auto.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tree_auto_model" model="ir.ui.view">
+            <field name="name">Automobile Model</field>
+            <field name="model">auto.model</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name" required="1"/>
+                    <field name="mfg_brand_id" required="1"/>
+                    <field name="type_id" domain="[('id', 'in', type_ids)]" required="1"
+                           options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                    <field name="type_ids" invisible="1"/>
+                    <field name="variant_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tree_auto_model_variant" model="ir.ui.view">
+            <field name="name">Automobile Model Variant</field>
+            <field name="model">auto.model.variant</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name" required="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tree_auto_vehicle" model="ir.ui.view">
+            <field name="name">Automobile Vehicle</field>
+            <field name="model">auto.vehicle</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="mfg_brand_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        Form views      -->
+        <record id="view_form_auto_vehicle" model="ir.ui.view">
+            <field name="name">Automobile Vehicle</field>
+            <field name="model">auto.vehicle</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="vehicle_image" widget="image" class="oe_avatar"/>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="mfg_brand_id" required="1"/>
+                                <field name="model_id" required="1" domain="[('mfg_brand_id', '=', mfg_brand_id)]"/>
+                                <field name="valid_variants" widget="many2many_tags" invisible="1"/>
+                                <field name="model_variant_id" domain="[('id', 'in', valid_variants)]" required="1"/>
+                            </group>
+                            <group>
+                                <field name="auto_type_id"/>
+                                <field name="year_id" required="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Catalogue">
+                                <field name="part_catalogue_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="part_ids"/>
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <field name="catalogue_image" widget="image" class="oe_avatar"/>
+                                            <group>
+                                                <group>
+                                                    <field name="name" required="1"/>
+                                                </group>
+                                            </group>
+                                            <notebook>
+                                                <page string="Parts">
+                                                    <field name="part_ids"/>
+                                                </page>
+                                            </notebook>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_form_auto_type" model="ir.ui.view">
+            <field name="name">Automobile Type</field>
+            <field name="model">auto.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="illustration_image" widget="image" class="oe_avatar"/>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" placeholder="Eg. Bike, Car etc.  Also use Illustration Image" required="1"/>
+                            </h1>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_form_auto_brand" model="ir.ui.view">
+            <field name="name">Auto Mfg Brand</field>
+            <field name="model">auto.mfg.brand</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="brand_logo" widget="image" class="oe_avatar"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Brand/Make name" required="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="type_ids" widget="many2many_tags" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="auto_vehicle_kanban_view" model="ir.ui.view">
+            <field name="name">Auto.vehicle.kanban</field>
+            <field name="model">auto.vehicle</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('auto.vehicle', 'vehicle_image', record.id.raw_value)"
+                                         alt="Vehicle" class="o_image_64_contain"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                    <ul>
+                                        <li>Manufacturer:
+                                            <field name="mfg_brand_id"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="auto_brand_kanban_view" model="ir.ui.view">
+            <field name="name">Auto.brand.kanban</field>
+            <field name="model">auto.mfg.brand</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('auto.mfg.brand', 'brand_logo', record.id.raw_value)"
+                                         alt="Logo" class="o_image_64_contain"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="auto_type_kanban_view" model="ir.ui.view">
+            <field name="name">Auto.type.kanban</field>
+            <field name="model">auto.type</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('auto.type', 'illustration_image', record.id.raw_value)"
+                                         alt="Logo" class="o_image_64_contain"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record id="auto_part_base.action_window_auto_brand" model="ir.actions.act_window">
+            <field name="name">Brands</field>
+            <field name="res_model">auto.mfg.brand</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <record id="auto_part_base.action_window_auto_type" model="ir.actions.act_window">
+            <field name="name">Types</field>
+            <field name="res_model">auto.type</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <record id="auto_part_base.action_window_auto_year" model="ir.actions.act_window">
+            <field name="name">Years</field>
+            <field name="res_model">auto.built.year</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="auto_part_base.action_window_auto_model" model="ir.actions.act_window">
+            <field name="name">Models</field>
+            <field name="res_model">auto.model</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="auto_part_base.action_window_auto_variant" model="ir.actions.act_window">
+            <field name="name">Variants</field>
+            <field name="res_model">auto.model.variant</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="auto_part_base.action_window_auto_vehicle" model="ir.actions.act_window">
+            <field name="name">Vehicles</field>
+            <field name="res_model">auto.vehicle</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <!-- Top menu item -->
+
+        <menuitem name="Auto Parts" id="auto_part_base.menu_root"/>
+
+        <!-- menu categories -->
+
+        <menuitem name="Vehicle" id="auto_part_base.menu_1_vehicle" parent="auto_part_base.menu_root" sequence="1"/>
+        <menuitem name="Configuration" id="auto_part_base.menu_2_conf" parent="auto_part_base.menu_root" sequence="2"/>
+
+        <!-- actions -->
+        <menuitem name="Vehicles" id="auto_part_base.menu_1_brand" parent="auto_part_base.menu_1_vehicle"
+                  action="auto_part_base.action_window_auto_vehicle"/>
+        <menuitem name="Brand" id="auto_part_base.menu_2_brand" parent="auto_part_base.menu_2_conf"
+                  action="auto_part_base.action_window_auto_brand"/>
+        <menuitem name="Type" id="auto_part_base.menu_3_type" parent="auto_part_base.menu_2_conf"
+                  action="auto_part_base.action_window_auto_type"/>
+        <menuitem name="Year" id="auto_part_base.menu_4_year" parent="auto_part_base.menu_2_conf"
+                  action="auto_part_base.action_window_auto_year"/>
+        <menuitem name="Model" id="auto_part_base.menu_5_model" parent="auto_part_base.menu_2_conf"
+                  action="auto_part_base.action_window_auto_model"/>
+        <menuitem name="Variant" id="auto_part_base.menu_5_variant" parent="auto_part_base.menu_2_conf"
+                  action="auto_part_base.action_window_auto_variant"/>
+    </data>
+</odoo>

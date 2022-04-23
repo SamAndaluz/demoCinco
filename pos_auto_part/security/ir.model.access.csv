@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vehicle_model_year,access_vehicle_model_year,model_vehicle_model_year,base.group_user,1,1,1,1
+access_vehicle_engine_number,access_vehicle_engine_number,model_vehicle_engine_number,base.group_user,1,1,1,1
+

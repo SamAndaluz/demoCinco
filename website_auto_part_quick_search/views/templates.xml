@@ -1,0 +1,131 @@
+<odoo>
+    <data>
+        <template id="products" inherit_id="website_sale.products" customize_show="True"
+                  name="Auto Parts Filter Widget">
+            <xpath expr="//div[hasclass('row', 'o_wsale_products_main_row')]"
+                   position="before">
+                <div style="
+                        margin: 10px 0 10px 0;
+                        box-shadow: 0px 0px 5px #969696;
+                        padding: 10px 0 10px 0;
+                    ">
+                    <div class="text-center pb-1">
+                        <em>Provide your vehicle details</em>
+                    </div>
+                    <form action="/shop" method="GET">
+                        <div class="text-center row justify-content-between justify-content-md-center"
+                             style="margin-left: 0px; margin-right: 0px;">
+                            <div class="col-lg-2 col-md-3 col-sm-4 p-1">
+                                <select class="select2-drop-mask w-100 auto_detail" name="type" id="auto_detail_1"
+                                        data-placeholder="Hello"
+                                        data-sequence="1">
+                                    <option value="">Type...</option>
+                                    <t t-foreach="all_auto_types" t-as="auto_type">
+                                        <t t-if="type == auto_type.id">
+                                            <option t-att-value="auto_type.id" selected="1" class="font-weight-bold">
+                                                <t t-esc="auto_type.name"/>
+                                            </option>
+                                        </t>
+                                        <t t-else="">
+                                            <option t-att-value="auto_type.id" class="font-weight-bold">
+                                                <t t-esc="auto_type.name"/>
+                                            </option>
+                                        </t>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-4 p-1">
+                                <select class="select2-drop-mask w-100 auto_detail" name="brand"
+                                        id="auto_detail_2" data-sequence="2">
+                                    <option value="">Manufacturer...</option>
+                                    <t t-foreach="all_auto_brands" t-as="auto_brand">
+                                        <t t-if="brand == auto_brand.id">
+                                            <option t-att-id="auto_brand.id" t-att-value="auto_brand.id"
+                                                    t-att-data-imgs="auto_brand.brand_logo" selected="1"
+                                                    class="font-weight-bold">
+                                                <t t-esc="auto_brand.name"/>
+                                            </option>
+                                        </t>
+                                        <t t-else="">
+                                            <option t-att-id="auto_brand.id" t-att-value="auto_brand.id"
+                                                    t-att-data-imgs="auto_brand.brand_logo" class="font-weight-bold">
+                                                <t t-esc="auto_brand.name"/>
+                                            </option>
+                                        </t>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-4 p-1">
+                                <select class="select2-drop-mask w-100 auto_detail" name="year"
+                                        id="auto_detail_3" data-sequence="3">
+                                    <option value="">Year...</option>
+                                    <t t-foreach="all_auto_years" t-as="auto_year">
+                                        <t t-if="year == auto_year.id">
+                                            <option t-att-value="auto_year.id" selected="1" class="font-weight-bold">
+                                                <t t-esc="auto_year.year"/>
+                                            </option>
+                                        </t>
+                                        <t t-else="">
+                                            <option t-att-value="auto_year.id" class="font-weight-bold">
+                                                <t t-esc="auto_year.year"/>
+                                            </option>
+                                        </t>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-4 p-1">
+                                <t t-set="model_id" t-value=""/>
+                                <t t-set="model_name" t-value=""/>
+                                <t t-foreach="all_auto_models" t-as="auto_model">
+                                    <t t-if="model == auto_model.id">
+                                        <t t-set="model_id" t-value="auto_model.id"/>
+                                        <t t-set="model_name" t-value="auto_model.name"/>
+                                    </t>
+                                </t>
+                                <input class="model_name_store" type="hidden" t-att-value="model_name"/>
+                                <input type="text" name="model"
+                                       class="select2-drop-mask w-100 auto_detail abcd font-weight-bold"
+                                       id="auto_detail_4" data-sequence="4"
+                                       style="border: #aaa solid 1px;min-height: 39px !important;"
+                                       placeholder="Model..." t-att-data-default_id_vals="model_id"
+                                       t-att-data-default_model_vals="model_name"
+                                       t-att-value="model_id"
+                                />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-4 p-1">
+                                <select class="select2-drop-mask w-100 auto_detail" name="variant"
+                                        id="auto_detail_5" data-sequence="5">
+                                    <option value="">Variant...</option>
+                                    <t t-foreach="all_auto_variants" t-as="auto_variant">
+                                        <t t-if="variant == auto_variant.id">
+                                            <option t-att-value="auto_variant.id" selected="1" class="font-weight-bold">
+                                                <t t-esc="auto_variant.name"/>
+                                            </option>
+                                        </t>
+                                        <t t-else="">
+                                            <option t-att-value="auto_variant.id" class="font-weight-bold">
+                                                <t t-esc="auto_variant.name"/>
+                                            </option>
+                                        </t>
+                                    </t>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="text-center btn btn-primary oe_search_button m-1 "
+                                    aria-label="Search" style="width: 35px;"
+                                    title="Search">
+                                <i class="fa fa-search"/>
+                            </button>
+                            <a class="text-center btn btn-secondary m-1" href="/shop"
+                               aria-label="Reset" style="width: 35px;"
+                               title="Reset">
+                                <i class="fa fa-times"/>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>
+
